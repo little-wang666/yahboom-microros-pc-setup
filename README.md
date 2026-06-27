@@ -65,7 +65,7 @@
 
 ```text
 microros_pc_setup/
-  README_zh.md
+  README.md
   LICENSE
   .gitignore
   docs/
