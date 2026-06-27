@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>yahboom_robot_bringup</name>
+  <version>0.1.0</version>
+  <description>Launch files for PC-side Yahboom micro-ROS robot bring-up.</description>
+  <maintainer email="user@example.com">Yahboom MicroROS PC User</maintainer>
+  <license>MIT</license>
+
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>micro_ros_agent</depend>
+  <depend>yahboom_pc_control</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

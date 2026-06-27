@@ -34,6 +34,24 @@ bash "/mnt/d/codex project/microros_pc_setup/wsl/setup_esp32_micro_ros_sources.s
 
 这些是学习和后续对照教程用的源码，不会写入 Windows 系统环境。
 
+如果要准备 ESP-IDF 工具链，执行：
+
+```bash
+bash "/mnt/d/codex project/microros_pc_setup/wsl/install_esp_idf_tools.sh"
+```
+
+脚本会把 ESP-IDF 安装到：
+
+```text
+~/esp/esp-idf
+```
+
+以后每次打开新 WSL 终端，如果要构建 ESP32 固件，需要先执行：
+
+```bash
+source ~/esp/esp-idf/export.sh
+```
+
 ## 后续硬件到货后的顺序
 
 1. 确认小车型号、控制板版本、ESP32 芯片型号。

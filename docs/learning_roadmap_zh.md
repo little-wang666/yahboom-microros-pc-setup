@@ -97,7 +97,32 @@ Serial：
 ~/ros2_ws/scripts/start_agent_serial.sh /dev/ttyUSB0 115200
 ```
 
-## 6. 小车到货后的第一轮联调
+## 6. PC bringup 启动组合
+
+目标：
+
+- 理解 `yahboom_robot_bringup` 这个包只负责“把多个节点一起启动”。
+- 知道 Agent 和 `/cmd_vel` 节点可以放在同一个 launch 文件中。
+
+练习：
+
+```bash
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch yahboom_robot_bringup pc_bringup_udp.launch.py
+```
+
+## 7. ESP32 固件骨架
+
+目标：
+
+- 打开 `esp32_firmware/yahboom_esp32_micro_ros_car/main/main.c`。
+- 看懂 FreeRTOS task、`CmdVel`、`WheelTarget`、差速运动学。
+- 知道哪些地方以后要替换成真实 micro-ROS、PWM、PID、编码器代码。
+
+先只阅读，不急着烧录。
+
+## 8. 小车到货后的第一轮联调
 
 目标：
 
@@ -114,7 +139,7 @@ ros2 topic echo /scan
 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.05}, angular: {z: 0.0}}"
 ```
 
-## 7. RViz2 与传感器可视化
+## 9. RViz2 与传感器可视化
 
 目标：
 
@@ -127,7 +152,7 @@ ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.05}, angular: {z
 rviz2
 ```
 
-## 8. 运动学与校准
+## 10. 运动学与校准
 
 目标：
 
@@ -142,7 +167,7 @@ rviz2
 4. odom 累计误差。
 5. 速度和角速度校准。
 
-## 9. ESP32 固件理解
+## 11. ESP32 固件理解
 
 目标：
 
@@ -155,7 +180,7 @@ rviz2
 - 每次固件改动前先备份原始配置。
 - 烧录前确认板卡型号、端口和电源。
 
-## 10. 后续扩展
+## 12. 后续扩展
 
 建议方向：
 

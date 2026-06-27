@@ -11,11 +11,14 @@
 - `~/ros2_ws` workspace 初始化逻辑
 - Python venv：`~/ros2_ws/.venv`
 - 最小 ROS2 Python package：`yahboom_pc_control`
+- ROS2 启动组合 package：`yahboom_robot_bringup`
 - `/cmd_vel` 测试发布节点
 - launch 文件：`cmd_vel_test.launch.py`
 - micro-ROS Agent UDP 启动脚本
 - micro-ROS Agent Serial 启动脚本
 - ESP32 下位机准备说明和源代码获取脚本
+- ESP-IDF 工具链安装脚本：`wsl/install_esp_idf_tools.sh`
+- ESP-IDF 下位机固件学习骨架：`esp32_firmware/yahboom_esp32_micro_ros_car`
 
 未完成，也不应该在现阶段强行完成：
 
@@ -38,17 +41,57 @@ microros_pc_setup/
     hardware_bringup_checklist_zh.md
     learning_roadmap_zh.md
     windows_isolation_zh.md
+  esp32_firmware/
+    yahboom_esp32_micro_ros_car/
   windows/
     install_wsl_ubuntu22_admin.ps1
   wsl/
     setup_ros2_humble_pc.sh
+    install_esp_idf_tools.sh
     setup_esp32_micro_ros_sources.sh
     scripts/
       start_agent_udp.sh
       start_agent_serial.sh
     ros2_ws_src/
       yahboom_pc_control/
+      yahboom_robot_bringup/
 ```
+
+## 已创建的软件包
+
+### PC 上位机：`yahboom_pc_control`
+
+位置：`wsl/ros2_ws_src/yahboom_pc_control`
+
+任务：
+
+- 发布 `/cmd_vel`。
+- 用 `geometry_msgs/msg/Twist` 表达线速度和角速度。
+- 作为后续键盘控制、视觉控制、导航控制的最小起点。
+- 代码中已经加入中文注释，方便逐行学习。
+
+### PC 启动组合：`yahboom_robot_bringup`
+
+位置：`wsl/ros2_ws_src/yahboom_robot_bringup`
+
+任务：
+
+- 启动 micro-ROS Agent。
+- 启动安全的 `/cmd_vel` 测试节点。
+- 作为未来真车联调的一键启动入口。
+- launch 文件中已经加入中文注释，解释参数和节点作用。
+
+### ESP32 下位机：`yahboom_esp32_micro_ros_car`
+
+位置：`esp32_firmware/yahboom_esp32_micro_ros_car`
+
+任务：
+
+- 提供 ESP-IDF 工程骨架。
+- 用 FreeRTOS task 拆分 micro-ROS 通信和电机控制。
+- 演示 `/cmd_vel` 到左右轮速度的差速运动学转换。
+- 预留 PWM、PID、编码器、odom 发布位置。
+- 当前只作为学习骨架，不自动烧录真实 ESP32。
 
 ## 安装步骤
 
@@ -98,6 +141,14 @@ ros2 launch yahboom_pc_control cmd_vel_test.launch.py
 
 看到 `/cmd_vel` 中持续出现 `linear.x=0.2`、`angular.z=0.1` 一类数据，就说明最小 ROS2 控制链路正常。
 
+也可以启动组合 launch：
+
+```bash
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch yahboom_robot_bringup pc_bringup_udp.launch.py
+```
+
 ## micro-ROS Agent
 
 UDP 默认端口 `8888`：
@@ -134,6 +185,22 @@ bash "/mnt/d/codex project/microros_pc_setup/wsl/setup_esp32_micro_ros_sources.s
 - micro-ROS Agent 源码参考
 
 后续拿到小车后，再根据实际硬件型号、串口设备和 Yahboom 最新教程进行 ESP32 固件配置与烧录。
+
+ESP32 学习骨架在：
+
+```text
+esp32_firmware/yahboom_esp32_micro_ros_car
+```
+
+它解释了 ESP32 侧为什么要用 FreeRTOS task、如何接收 `/cmd_vel`、如何把速度转换成左右轮目标速度，以及未来在哪里补 PWM、PID、编码器和 `/odom`。
+
+如果你后续要准备 ESP-IDF 工具链，在 WSL 中执行：
+
+```bash
+bash "/mnt/d/codex project/microros_pc_setup/wsl/install_esp_idf_tools.sh"
+```
+
+这个脚本只安装 ESP-IDF 到 `~/esp/esp-idf`，不会烧录 ESP32，也不会改 Windows 原生环境。
 
 ## 接下来学习路线
 

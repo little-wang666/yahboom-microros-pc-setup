@@ -43,7 +43,7 @@ python3 -m venv "$HOME/ros2_ws/.venv"
 "$HOME/ros2_ws/.venv/bin/python" -m pip install --upgrade pip
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cp -r "$SCRIPT_DIR/ros2_ws_src/yahboom_pc_control" "$HOME/ros2_ws/src/"
+find "$SCRIPT_DIR/ros2_ws_src" -mindepth 1 -maxdepth 1 -type d -exec cp -r {} "$HOME/ros2_ws/src/" \;
 cp "$SCRIPT_DIR/scripts/start_agent_udp.sh" "$HOME/ros2_ws/scripts/"
 cp "$SCRIPT_DIR/scripts/start_agent_serial.sh" "$HOME/ros2_ws/scripts/"
 chmod +x "$HOME/ros2_ws/scripts/"*.sh

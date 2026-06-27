@@ -1,7 +1,7 @@
 from glob import glob
 from setuptools import setup
 
-package_name = "yahboom_pc_control"
+package_name = "yahboom_robot_bringup"
 
 setup(
     name=package_name,
@@ -16,12 +16,6 @@ setup(
     zip_safe=True,
     maintainer="Yahboom MicroROS PC User",
     maintainer_email="user@example.com",
-    description="Minimal PC-side ROS2 control nodes for Yahboom MicroROS car bring-up.",
+    description="Launch files for PC-side Yahboom micro-ROS robot bring-up.",
     license="MIT",
-    tests_require=["pytest"],
-    entry_points={
-        "console_scripts": [
-            "cmd_vel_publisher = yahboom_pc_control.cmd_vel_publisher:main",
-        ],
-    },
 )
