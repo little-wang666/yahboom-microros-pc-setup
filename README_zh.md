@@ -114,6 +114,12 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 bash "/mnt/d/codex project/microros_pc_setup/wsl/setup_ros2_humble_pc.sh"
 ```
 
+也可以在 Windows PowerShell 中一次性安装 WSL 侧 ROS2、ESP32 参考源码和 ESP-IDF：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\codex project\microros_pc_setup\windows\run_wsl_environment_setup.ps1"
+```
+
 6. 安装完成后打开上位机 workspace：
 
 ```bash
