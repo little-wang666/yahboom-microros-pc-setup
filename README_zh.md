@@ -32,6 +32,26 @@
 
 说明：ROS2 和 micro-ROS Agent 没有安装到 Windows 原生环境，仍然隔离在 WSL2 中。ESP32 烧录工具需要 Windows 直接访问串口，所以 ESP-IDF 使用 Espressif 官方 Windows 工具链；其中 ESP-IDF 源码在 D 盘，工具链缓存由官方安装器放在 `C:\Espressif\tools`。
 
+## 本机已完成验收清单
+
+下面这些不是“计划要做”，而是已经在这台电脑上实际跑通过的内容：
+
+1. WSL2 已启用，`Ubuntu-22.04` 已导入并设置为 WSL2 发行版。
+2. Ubuntu 22.04 已能正常启动，项目路径可从 WSL 访问：`/mnt/d/codex project/microros_pc_setup`。
+3. ROS2 Humble 已安装在 WSL 内，基础命令 `ros2` 可用。
+4. PC 上位机工作区 `~/ros2_ws` 已创建，并完成 `colcon build`。
+5. `yahboom_pc_control` 已构建成功，可以发布 `/cmd_vel` 测试速度指令。
+6. `yahboom_robot_bringup` 已构建成功，可以作为后续真车联调的 launch 入口。
+7. `micro_ros_agent` 已从源码按 Humble 分支构建成功，后续可通过 UDP 或 Serial 连接 ESP32 下位机。
+8. `micro_ros_msgs` 已构建成功，micro-ROS 消息依赖已补齐。
+9. VS Code Remote - WSL、Python、C/C++、CMake Tools 扩展已安装，后续可以用 VS Code 打开 WSL 工作区学习代码。
+10. ESP-IDF v5.2.5 已安装，`idf.py --version` 已验证通过。
+11. ESP32 学习骨架 `esp32_firmware/yahboom_esp32_micro_ros_car` 已按 `esp32s3` 目标完整编译通过。
+12. 已生成后续可烧录所需的固件产物，包括 bootloader、partition table 和 `yahboom_esp32_micro_ros_car.bin`。
+13. 已新增 `windows/build_esp32_firmware.ps1`，后续可一键重新编译 ESP32 工程。
+14. 已新增 `windows/open_esp_idf_shell.ps1`，后续可打开 ESP-IDF 专用终端执行 `idf.py build`、`idf.py -p COMx flash monitor`。
+15. 仓库中的 ROS2 包、ESP32 工程骨架和脚本都放在 `D:\codex project\microros_pc_setup`，方便你直接打开、阅读和继续写代码。
+
 未完成，也不应该在现阶段强行完成：
 
 - ESP32 固件烧录
