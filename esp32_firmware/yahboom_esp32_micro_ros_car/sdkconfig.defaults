@@ -1,4 +1,5 @@
-# 这里放 ESP-IDF 默认配置。
-# 真实硬件到手后再根据 Yahboom 教程补充 Wi-Fi、串口、芯片型号等配置。
+# ESP-IDF default configuration.
+# Keep this file ASCII-only because ESP-IDF kconfgen may decode it with the
+# Windows active code page. Chinese explanations live in README_zh.md and code.
 
 CONFIG_FREERTOS_HZ=1000

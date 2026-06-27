@@ -7,6 +7,8 @@ __pycache__/
 .pytest_cache/
 .colcon/
 .vscode/
+.cache/
+eim_config.toml
 *.bag
 *.db3
 *.log

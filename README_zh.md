@@ -20,6 +20,18 @@
 - ESP-IDF 工具链安装脚本：`wsl/install_esp_idf_tools.sh`
 - ESP-IDF 下位机固件学习骨架：`esp32_firmware/yahboom_esp32_micro_ros_car`
 
+当前这台电脑已实测完成：
+
+- WSL2 发行版：`Ubuntu-22.04`，位置在 `D:\wsl\Ubuntu-22.04`
+- ROS2：Humble，安装在 WSL 的 `/opt/ros/humble`
+- PC 工作区：WSL 内 `~/ros2_ws`
+- 已构建包：`yahboom_pc_control`、`yahboom_robot_bringup`、`micro_ros_agent`、`micro_ros_msgs`
+- ESP-IDF：`v5.2.5`，主目录在 `D:\Espressif\v5.2.5\esp-idf`
+- ESP-IDF 工具链：Espressif 官方 EIM 放在 `C:\Espressif\tools`
+- ESP32 骨架工程：已用 `esp32s3` 目标编译通过
+
+说明：ROS2 和 micro-ROS Agent 没有安装到 Windows 原生环境，仍然隔离在 WSL2 中。ESP32 烧录工具需要 Windows 直接访问串口，所以 ESP-IDF 使用 Espressif 官方 Windows 工具链；其中 ESP-IDF 源码在 D 盘，工具链缓存由官方安装器放在 `C:\Espressif\tools`。
+
 未完成，也不应该在现阶段强行完成：
 
 - ESP32 固件烧录
@@ -45,6 +57,8 @@ microros_pc_setup/
     yahboom_esp32_micro_ros_car/
   windows/
     install_wsl_ubuntu22_admin.ps1
+    build_esp32_firmware.ps1
+    open_esp_idf_shell.ps1
   wsl/
     setup_ros2_humble_pc.sh
     install_esp_idf_tools.sh
@@ -207,6 +221,27 @@ bash "/mnt/d/codex project/microros_pc_setup/wsl/install_esp_idf_tools.sh"
 ```
 
 这个脚本只安装 ESP-IDF 到 `~/esp/esp-idf`，不会烧录 ESP32，也不会改 Windows 原生环境。
+
+当前电脑已经安装了 Windows 侧 ESP-IDF v5.2.5。编译 ESP32 骨架工程可以直接在 PowerShell 执行：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\codex project\microros_pc_setup\windows\build_esp32_firmware.ps1"
+```
+
+如果你想打开一个可持续输入命令的 ESP-IDF 终端：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\codex project\microros_pc_setup\windows\open_esp_idf_shell.ps1"
+```
+
+打开后常用命令是：
+
+```powershell
+idf.py build
+idf.py -p COMx flash monitor
+```
+
+这里的 `COMx` 要等 ESP32 用 USB 连接电脑后，在设备管理器里查看真实串口号。
 
 ## 接下来学习路线
 
